@@ -1,0 +1,3 @@
+# Errors codes
+
+## 1 -> ""
