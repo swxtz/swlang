@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
 use std::io;
-use std::io::BufReader;
 use std::io::Write;
 
 mod errors;
@@ -17,9 +16,11 @@ fn main() {
     match args[1].as_str() {
         "new" => {
             if args[2].as_str() == "-l" {
-                let content = "# Comenterios deve ser feitos com `#`, visite http://... para ve a documentação";
+                let content = "# Comenterios deve ser feitos com `#`, visite http://... para ver a documentação";
 
-                let mut file = File::create("config.sw");
+                let mut file = File::create("config.sw")
+                    .expect("não foi possivel criar um arquivo, tente novamente mais tarde");
+
                 file.write_all(content.as_bytes()).expect("Could not write");
 
                 println!("Arquivo de configuração criado na raiz (.)");
