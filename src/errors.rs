@@ -25,3 +25,23 @@ pub fn warn(warn_code: i8) -> String {
         _ => unreachable!(),
     }
 }
+
+
+pub fn help() -> String {
+    let help = "
+    Projeto esta em fase beta de desenvolvimento. 
+
+    swlang [comando] [opções]
+
+    Comandos:
+        new [opções] - cria um novo arquivo
+            -l - cria um arquivo de configuração na raiz (.)
+
+        read [opções] - lê um arquivo
+            -l - lê o arquivo de configuração na raiz (.)
+
+        --help | -h - mostra essa mensagem
+    ";
+
+    help.to_string()
+}

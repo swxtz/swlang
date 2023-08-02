@@ -57,6 +57,11 @@ fn main() {
             }
         }
 
+        "teste" => {
+            println!("{}", errors::help());
+            return;
+        }
+
         _ => unreachable!(),
     }
 }
