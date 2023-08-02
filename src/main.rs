@@ -2,7 +2,9 @@ use std::env;
 use std::fs::File;
 use std::io;
 use std::io::Write;
+use std::path::Path;
 
+mod compiler;
 mod errors;
 
 fn main() {
@@ -24,6 +26,7 @@ fn main() {
                 file.write_all(content.as_bytes()).expect("Could not write");
 
                 println!("Arquivo de configuração criado na raiz (.)");
+
                 return;
             }
 
@@ -39,6 +42,21 @@ fn main() {
             println!("");
             print!("arquivo sendo criado em: {}", path)
         }
+
+        "read" => {
+            if args[2].as_str() == "-l" {
+                println!("{}", errors::warn(1));
+
+                let path = Path::new("config.sw");
+
+                let filetype = compiler::verify_filetype(path.to_str().unwrap());
+
+                if filetype == false {
+                    return println!("{}", errors::error(2));
+                }
+            }
+        }
+
         _ => unreachable!(),
     }
 }
