@@ -7,21 +7,21 @@ pub fn verify_filetype(file: &str) -> bool {
     if let Some(extension) = path.extension() {
         if let Some(extension_str) = extension.to_str() {
             if extension_str == "sw" {
-                println!("Arquivo de configuração encontrado");
+                println!("Configuration file found");
 
                 return true;
             } else {
-                println!("Arquivo de configuração não encontrado");
+                println!("Configuration file not found");
 
                 return false;
             }
         } else {
-            println!("Não foi possível obter a extensão do arquivo.");
+            println!("Could not get the file extension.");
 
             return false;
         }
     } else {
-        println!("O arquivo não possui uma extensão.");
+        println!("The file does not have an extension.");
 
         return false;
     }

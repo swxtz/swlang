@@ -22,6 +22,10 @@ pub fn warn(warn_code: i8) -> String {
             .yellow()
             .to_string(),
 
+        2 => "Project is in beta development phase."
+            .yellow()
+            .to_string(),
+
         _ => unreachable!(),
     }
 }

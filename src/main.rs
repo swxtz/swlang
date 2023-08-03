@@ -1,9 +1,9 @@
+use colored::Colorize;
 use std::env;
 use std::fs::File;
 use std::io;
 use std::io::Write;
 use std::path::Path;
-use colored::Colorize;
 
 mod compiler;
 mod errors;
@@ -11,15 +11,27 @@ mod errors;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
+    let disclamer = "Project is in beta development phase.".yellow();
+
     if args.len() == 1 {
-        println!("{}", errors::error(1));
+        println!(
+            "
+        {}
+        {}
+        {}
+        ",
+            disclamer,
+            errors::error(1),
+            errors::help()
+        );
         return;
     }
 
     match args[1].as_str() {
         "new" => {
             if args[2].as_str() == "-l" {
-                let content = "# Comments must be done with `#`, visit http://... for documentation";
+                let content =
+                    "# Comments must be done with `#`, visit http://... for documentation";
 
                 let mut file = File::create("config.sw")
                     .expect("could not create a file, please try again later");
@@ -55,8 +67,6 @@ fn main() {
                 if filetype == false {
                     return println!("{}", errors::error(2));
                 }
-
-                
             }
         }
 
