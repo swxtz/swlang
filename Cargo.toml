@@ -1,7 +1,13 @@
 [package]
 name = "swlang"
-version = "0.1.0"
+version = "0.0.2"
 edition = "2021"
+
+license =  "MIT"
+description = "A simple configuration language written in Rust"
+authors = ["Gustavo Mendonça, <https://github.com/swxtz>"]
+
+
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
