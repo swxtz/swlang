@@ -3,21 +3,10 @@ use std::fs::File;
 use std::io;
 use std::io::Write;
 use std::path::Path;
-use std::io::BufReader;
+use colored::Colorize;
 
 mod compiler;
 mod errors;
-
-fn read_file_line_by_line(filepath: &str) -> Result<(), Box<dyn std::error::Error>> {
-    let file = File::open(filepath)?;
-    let mut reader = BufReader::new(file);
-
-    for line in reader.lines() {
-        println!("{}", line?);
-    }
-
-    Ok(())
-}
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -30,29 +19,29 @@ fn main() {
     match args[1].as_str() {
         "new" => {
             if args[2].as_str() == "-l" {
-                let content = "# Comenterios deve ser feitos com `#`, visite http://... para ver a documentação";
+                let content = "# Comments must be done with `#`, visit http://... for documentation";
 
                 let mut file = File::create("config.sw")
-                    .expect("não foi possivel criar um arquivo, tente novamente mais tarde");
+                    .expect("could not create a file, please try again later");
 
                 file.write_all(content.as_bytes()).expect("Could not write");
 
-                println!("Arquivo de configuração criado na raiz (.)");
+                println!("Configuration file created at root (.)");
 
                 return;
             }
 
             println!("");
-            print!("escolha onde o arquivo vai ser salvo, por padrão e no (.): ");
+            print!("choose where the file will be saved, by default and in root (.): ");
 
             let mut path = String::new();
 
             io::stdin()
                 .read_line(&mut path)
-                .expect("error ao ler arquivo, tente novamente!");
+                .expect("Error reading file, try again!");
 
             println!("");
-            print!("arquivo sendo criado em: {}", path)
+            print!("File being created at: {}", path)
         }
 
         "read" => {
@@ -67,11 +56,14 @@ fn main() {
                     return println!("{}", errors::error(2));
                 }
 
-                let content = compiler::read_file_line_by_line(path);
+                
             }
         }
 
         "teste" => {
+            let disclamer = "Project is in beta development phase.".yellow();
+
+            println!("{}", disclamer);
             println!("{}", errors::help());
             return;
         }

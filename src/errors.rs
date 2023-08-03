@@ -4,11 +4,11 @@ pub fn error(error_code: i8) -> String {
     let code = error_code;
 
     match code {
-        1 => "Voce precisa passar pelo menos 1 argumento"
+        1 => "You need to pass at least 1 argument"
             .red()
             .to_string(),
 
-        2 => "O arquivo não tem a extensão .sw".red().to_string(),
+        2 => "The file does not have the .sw extension".red().to_string(),
 
         _ => unreachable!(),
     }
@@ -18,7 +18,7 @@ pub fn warn(warn_code: i8) -> String {
     let code = warn_code;
 
     match code {
-        1 => "Lendo o arquivo no diretorio local (.)"
+        1 => "Reading the file in the local directory (.)"
             .yellow()
             .to_string(),
 
@@ -29,18 +29,16 @@ pub fn warn(warn_code: i8) -> String {
 
 pub fn help() -> String {
     let help = "
-    Projeto esta em fase beta de desenvolvimento. 
+    swlang [command] [options]
 
-    swlang [comando] [opções]
+     Commands:
+         new [options] - creates a new file
+             -l - creates a configuration file at the root (.)
 
-    Comandos:
-        new [opções] - cria um novo arquivo
-            -l - cria um arquivo de configuração na raiz (.)
+         read [options] - reads a file
+             -l - reads the configuration file at the root (.)
 
-        read [opções] - lê um arquivo
-            -l - lê o arquivo de configuração na raiz (.)
-
-        --help | -h - mostra essa mensagem
+         --help | -h - show this message
     ";
 
     help.to_string()
