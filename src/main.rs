@@ -7,7 +7,7 @@ use std::path::Path;
 
 mod compiler;
 
-use crate::compiler::compiler::verify_filetype;
+use crate::compiler::compiler::{verify_filetype, verify_file_len};
 
 
 mod errors;
@@ -74,6 +74,12 @@ fn main() {
 
                 if filetype == false {
                     return println!("{}", errors::error(2));
+                }
+
+                let lines = verify_file_len(path.to_string());
+
+                for line in lines {
+                    println!("{}", line);
                 }
             }
         }
