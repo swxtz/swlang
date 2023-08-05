@@ -6,9 +6,17 @@ use std::io::Write;
 use std::path::Path;
 
 mod compiler;
+
+use crate::compiler::compiler::verify_filetype;
+
+
 mod errors;
 
+
 fn main() {
+
+    // let arg
+
     let args: Vec<String> = env::args().collect();
 
     let disclamer = "Project is in beta development phase.".yellow();
@@ -62,7 +70,7 @@ fn main() {
 
                 let path = Path::new("config.sw").to_str().unwrap();
 
-                let filetype = compiler::verify_filetype(path);
+                let filetype = verify_filetype(path);
 
                 if filetype == false {
                     return println!("{}", errors::error(2));

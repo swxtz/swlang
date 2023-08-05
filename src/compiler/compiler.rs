@@ -1,5 +1,6 @@
-
 use std::path::Path;
+
+use crate::compiler::errors;
 
 pub fn verify_filetype(file: &str) -> bool {
     let path = Path::new(&file);
@@ -7,23 +8,22 @@ pub fn verify_filetype(file: &str) -> bool {
     if let Some(extension) = path.extension() {
         if let Some(extension_str) = extension.to_str() {
             if extension_str == "sw" {
-                println!("Configuration file found");
+                println!("{}", errors::error(1));
 
                 return true;
             } else {
-                println!("Configuration file not found");
+                println!("{}", errors::error(2));
 
                 return false;
             }
         } else {
-            println!("Could not get the file extension.");
+            println!("{}", errors::error(3));
 
             return false;
         }
     } else {
-        println!("The file does not have an extension.");
+        println!("{}", errors::error(4));
 
         return false;
     }
 }
-

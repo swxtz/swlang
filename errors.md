@@ -1,3 +1,0 @@
-# Errors codes
-
-## 1 -> ""
