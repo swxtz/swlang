@@ -6,7 +6,9 @@ use std::io::Write;
 use std::path::Path;
 
 mod compiler;
+mod template;
 
+use crate::template::downloader::get_template;
 use crate::compiler::compiler::{verify_filetype, verify_file_len};
 
 
@@ -84,7 +86,7 @@ fn main() {
             }
         }
 
-        "teste" => {
+        "help" => {
             let disclamer = "Project is in beta development phase.".yellow();
 
             println!("{}", disclamer);
@@ -92,6 +94,10 @@ fn main() {
             return;
         }
 
+        "template" => {
+            get_template().expect("Could not download template");
+            return;
+        }
         _ => unreachable!(),
     }
 }
