@@ -7,14 +7,15 @@ pub async fn get_template() -> Result<(), Box<dyn Error>> {
 
 
     let content = converte_to_buffer(resp);
-    print!("{:#?}", content);
+    println!("{:#?}", content);
+
     Ok(())
 }
 
 pub fn converte_to_buffer(response: String) -> Vec<String> {
 
     #[warn(unused_assignments)]
-    
+
     let file = response;
     let reader = io::BufReader::new(file.as_bytes());
 
