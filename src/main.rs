@@ -95,7 +95,16 @@ fn main() {
         }
 
         "template" => {
-            get_template().expect("Could not download template");
+            
+            let url = args[2].to_string();
+
+            let content = get_template(url).expect("Could not download template");
+
+            let path = Path::new("config.sw").to_str().unwrap();
+
+            compiler::compiler::create_file(path.to_string(), content).expect("Could not create file");
+
+            
             return;
         }
         _ => unreachable!(),

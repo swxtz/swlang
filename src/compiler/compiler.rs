@@ -4,7 +4,9 @@ use crate::compiler::errors;
 
 use std::fs::File;
 use std::path::Path;
-use std::io::{self, BufRead};
+use std::io::{self, BufRead, Write};
+use std::error::Error;
+
 
 pub fn verify_filetype(file: &str) -> bool {
     let path = Path::new(&file);
@@ -62,4 +64,14 @@ pub fn verify_file_len(path:String) -> Vec<String> {
     } 
 
     return content;
+}
+
+pub fn create_file(path: String, content: Vec<String>) -> Result<String, Box<dyn Error>> {
+
+    let mut file = File::create(path)?;
+    for line in content {
+        writeln!(file, "{}", line)?;
+    }
+
+    Ok("File created".to_string())
 }
