@@ -8,15 +8,12 @@ use std::path::Path;
 mod compiler;
 mod template;
 
-use crate::template::downloader::get_template;
-use crate::compiler::compiler::{verify_filetype, verify_file_len};
-
+use crate::compiler::compiler::{verify_file_len, verify_filetype};
+use crate::template::downloader::{default_url, get_template};
 
 mod errors;
 
-
 fn main() {
-
     // let arg
 
     let args: Vec<String> = env::args().collect();
@@ -95,16 +92,30 @@ fn main() {
         }
 
         "template" => {
-            
-            let url = args[2].to_string();
+            #[allow(unused_assignments)]
+            let mut url = String::new();
+            if args.len() <= 2 {
+                url = default_url();
+
+                let content = get_template(url).expect("Could not download template");
+
+                let path = Path::new("config.sw").to_str().unwrap();
+
+                compiler::compiler::create_file(path.to_string(), content)
+                    .expect("Could not create file");
+
+                return;
+            }
+
+            url = args[2].to_string();
 
             let content = get_template(url).expect("Could not download template");
 
             let path = Path::new("config.sw").to_str().unwrap();
 
-            compiler::compiler::create_file(path.to_string(), content).expect("Could not create file");
+            compiler::compiler::create_file(path.to_string(), content)
+                .expect("Could not create file");
 
-            
             return;
         }
         _ => unreachable!(),
