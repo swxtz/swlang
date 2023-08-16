@@ -118,6 +118,12 @@ fn main() {
 
             return;
         }
-        _ => unreachable!(),
+        _ => {
+            let disclamer = "Project is in beta development phase.".yellow();
+
+            println!("{}", disclamer);
+            println!("{}", errors::help());
+            return;
+        }
     }
 }
