@@ -126,4 +126,16 @@ fn main() {
             return;
         }
     }
+
+   
+}
+
+mod tests {
+    #[test]
+    fn test_get_template() {
+        let url = "https://raw.githubusercontent.com/swxtz/swlang/main/Cargo.toml".to_string();
+        let content = super::get_template(url);
+        assert_eq!(content.is_ok(), true);
+    }
+ 
 }
