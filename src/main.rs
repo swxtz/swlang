@@ -126,8 +126,6 @@ fn main() {
             return;
         }
     }
-
-   
 }
 
 mod tests {
@@ -137,5 +135,15 @@ mod tests {
         let content = super::get_template(url);
         assert_eq!(content.is_ok(), true);
     }
- 
+
+    #[test]
+    fn test_verify_filetype() {
+        let path = "config.sw";
+        let filetype = super::verify_filetype(path);
+        assert_eq!(filetype, true);
+    }
+
+    #[test]
+    fn test_verify_file_len() {
+    }
 }
