@@ -9,6 +9,14 @@ authors = ["Gustavo Mendonça, <https://github.com/swxtz>"]
 repository = "https://github.com/swxtz/swlang"
 documentation = "https://docs.rs/crate/swlang"
 
+[package.metadata.scripts]
+run = "cargo run"
+check = "cargo check"
+build = "cargo build"
+release = "cargo build --release"
+publish = "cargo publish"
+publish-dirty = "cargo publish --allow-dirty"
+doc = "cargo doc --no-deps --open"
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
