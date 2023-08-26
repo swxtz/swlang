@@ -1,12 +1,9 @@
-
-
 use crate::compiler::errors;
 
-use std::fs::File;
-use std::path::Path;
-use std::io::{self, BufRead, Write};
 use std::error::Error;
-
+use std::fs::File;
+use std::io::{self, BufRead, Write};
+use std::path::Path;
 
 pub fn verify_filetype(file: &str) -> bool {
     let path = Path::new(&file);
@@ -34,16 +31,15 @@ pub fn verify_filetype(file: &str) -> bool {
     }
 }
 
-
-pub fn verify_file_len(path:String) -> Vec<String> {
+pub fn verify_file_len(path: String) -> Vec<String> {
     let path = path.as_str();
 
     let file = File::open(path).expect("File not found");
     let reader = io::BufReader::new(file);
 
     #[allow(unused_variables)]
-    let mut lines = 0; 
-    let mut content:Vec<String> = Vec::new();
+    let mut lines = 0;
+    let mut content: Vec<String> = Vec::new();
 
     for line in reader.lines() {
         // Desembrulha o Resultado de cada linha
@@ -61,17 +57,33 @@ pub fn verify_file_len(path:String) -> Vec<String> {
 
     if lines == 0 {
         println!("{}", errors::error(5));
-    } 
+    }
 
     return content;
 }
 
 pub fn create_file(path: String, content: Vec<String>) -> Result<String, Box<dyn Error>> {
-
     let mut file = File::create(path)?;
     for line in content {
         writeln!(file, "{}", line)?;
     }
+
+    Ok("File created".to_string())
+}
+
+pub fn create_file_one_line(path_to_file: String, content: String) -> Result<String, Box<dyn Error>> {
+    let mut path = String::new();
+
+    if path == "" {
+        path = "config.sw".to_string();
+    } else {
+        path = path_to_file;
+    }
+
+    let mut file =
+        File::create(path).expect("could not create a file, please try again later");
+
+    file.write_all(content.as_bytes()).expect("Could not write");
 
     Ok("File created".to_string())
 }

@@ -129,9 +129,19 @@ fn main() {
 }
 
 mod tests {
+    use crate::compiler::compiler::create_file_one_line;
+
+
     #[test]
     fn test_get_template() {
         let url = "https://raw.githubusercontent.com/swxtz/swlang/main/Cargo.toml".to_string();
+        let content = super::get_template(url);
+        assert_eq!(content.is_ok(), true);
+    }
+
+    #[test]
+    fn test_get_template_and_convert_url() {
+        let url = "https://github.com/swxtz/swlang/blob/main/Cargo.toml".to_string();
         let content = super::get_template(url);
         assert_eq!(content.is_ok(), true);
     }
@@ -145,5 +155,12 @@ mod tests {
 
     #[test]
     fn test_verify_file_len() {
+        let content: String = "# Comments must be done with `#`, visit http://... for documentation".to_string();
+
+        
+        let path = "config.sw";
+        create_file_one_line(path.to_string(), content).expect("Error creating file");
+        let lines = super::verify_file_len(path.to_string());
+        assert_eq!(lines.len(), 1);
     }
 }
