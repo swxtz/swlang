@@ -1,13 +1,13 @@
 use colored::Colorize;
 use std::env;
-use std::fs::File;
 use std::io;
-use std::io::Write;
 use std::path::Path;
+
 
 mod compiler;
 mod template;
 
+use crate::compiler::flags::new_local;
 use crate::compiler::compiler::{verify_file_len, verify_filetype};
 use crate::template::downloader::{default_url, get_template};
 
@@ -37,16 +37,7 @@ fn main() {
     match args[1].as_str() {
         "new" => {
             if args[2].as_str() == "-l" {
-                let content =
-                    "# Comments must be done with `#`, visit http://... for documentation";
-
-                let mut file = File::create("config.sw")
-                    .expect("could not create a file, please try again later");
-
-                file.write_all(content.as_bytes()).expect("Could not write");
-
-                println!("Configuration file created at root (.)");
-
+                new_local();
                 return;
             }
 
@@ -132,7 +123,6 @@ mod tests {
     #[allow(unused_imports)]
     use crate::compiler::compiler::create_file_one_line;
 
-
     #[test]
     fn test_get_template() {
         let url = "https://raw.githubusercontent.com/swxtz/swlang/main/Cargo.toml".to_string();
@@ -156,13 +146,12 @@ mod tests {
 
     #[test]
     fn test_verify_file_len() {
-        let content: String = "# Comments must be done with `#`, visit http://... for documentation".to_string();
+        let content: String =
+            "# Comments must be done with `#`, visit http://... for documentation".to_string();
 
-        
         let path = "config.sw";
         create_file_one_line(path.to_string(), content).expect("Error creating file");
         let lines = super::verify_file_len(path.to_string());
         assert_eq!(lines.len(), 1);
     }
 }
-
