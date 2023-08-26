@@ -129,6 +129,7 @@ fn main() {
 }
 
 mod tests {
+    #[allow(unused_imports)]
     use crate::compiler::compiler::create_file_one_line;
 
 
@@ -164,3 +165,4 @@ mod tests {
         assert_eq!(lines.len(), 1);
     }
 }
+

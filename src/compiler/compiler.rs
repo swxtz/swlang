@@ -71,6 +71,7 @@ pub fn create_file(path: String, content: Vec<String>) -> Result<String, Box<dyn
     Ok("File created".to_string())
 }
 
+#[allow(dead_code)]
 pub fn create_file_one_line(path_to_file: String, content: String) -> Result<String, Box<dyn Error>> {
     let mut path = String::new();
 
