@@ -4,9 +4,7 @@ pub fn error(error_code: i8) -> String {
     let code = error_code;
 
     match code {
-        1 => "You need to pass at least 1 argument"
-            .red()
-            .to_string(),
+        1 => "You need to pass at least 1 argument".red().to_string(),
 
         2 => "The file does not have the .sw extension".red().to_string(),
 
@@ -22,14 +20,11 @@ pub fn warn(warn_code: i8) -> String {
             .yellow()
             .to_string(),
 
-        2 => "Project is in beta development phase."
-            .yellow()
-            .to_string(),
+        2 => "Project is in beta development phase.".yellow().to_string(),
 
         _ => unreachable!(),
     }
 }
-
 
 pub fn help() -> String {
     let help = "

@@ -3,12 +3,11 @@ use std::env;
 use std::io;
 use std::path::Path;
 
-
 mod compiler;
 mod template;
 
-use crate::compiler::flags::new_local;
 use crate::compiler::compiler::{verify_file_len, verify_filetype};
+use crate::compiler::flags::{new_file, new_local};
 use crate::template::downloader::{default_url, get_template};
 
 mod errors;
@@ -41,17 +40,19 @@ fn main() {
                 return;
             }
 
-            println!("");
-            print!("choose where the file will be saved, by default and in root (.): ");
+            new_file();
 
-            let mut path = String::new();
+            // println!("");
+            // print!("choose where the file will be saved, by default and in root (.): ");
 
-            io::stdin()
-                .read_line(&mut path)
-                .expect("Error reading file, try again!");
+            // let mut path = String::new();
 
-            println!("");
-            print!("File being created at: {}", path)
+            // io::stdin()
+            //     .read_line(&mut path)
+            //     .expect("Error reading file, try again!");
+
+            // println!("");
+            // print!("File being created at: {}", path)
         }
 
         "read" => {

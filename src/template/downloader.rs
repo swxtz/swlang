@@ -76,7 +76,6 @@ fn converte_url(url: String) -> String {
     return url;
 }
 
-
 mod tests {
     #[test]
     fn test_get_template() {
@@ -101,5 +100,5 @@ mod tests {
 
         assert_eq!(url.contains("raw.githubusercontent.com"), true);
         assert_eq!(url.contains("blob"), false);
-        }
+    }
 }

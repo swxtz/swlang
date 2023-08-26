@@ -72,7 +72,10 @@ pub fn create_file(path: String, content: Vec<String>) -> Result<String, Box<dyn
 }
 
 #[allow(dead_code)]
-pub fn create_file_one_line(path_to_file: String, content: String) -> Result<String, Box<dyn Error>> {
+pub fn create_file_one_line(
+    path_to_file: String,
+    content: String,
+) -> Result<String, Box<dyn Error>> {
     let mut path = String::new();
 
     if path == "" {
@@ -81,8 +84,7 @@ pub fn create_file_one_line(path_to_file: String, content: String) -> Result<Str
         path = path_to_file;
     }
 
-    let mut file =
-        File::create(path).expect("could not create a file, please try again later");
+    let mut file = File::create(path).expect("could not create a file, please try again later");
 
     file.write_all(content.as_bytes()).expect("Could not write");
 
