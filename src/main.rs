@@ -1,6 +1,5 @@
 use colored::Colorize;
 use std::env;
-use std::io;
 use std::path::Path;
 
 mod compiler;
@@ -10,7 +9,7 @@ use crate::compiler::compiler::{verify_file_len, verify_filetype};
 use crate::compiler::flags::{new_file, new_local};
 use crate::template::downloader::{default_url, get_template};
 
-mod errors;
+mod messages;
 
 fn main() {
     // let arg
@@ -20,16 +19,19 @@ fn main() {
     let disclamer = "Project is in beta development phase.".yellow();
 
     if args.len() == 1 {
-        println!(
-            "
-        {}
-        {}
-        {}
-        ",
-            disclamer,
-            errors::error(1),
-            errors::help()
-        );
+        // println!(
+        //     "
+        // {}
+        // {}
+        // {}
+        // ",
+        // messages::
+        //     disclamer,
+        //     messages::error(1),
+        //     messages::help()
+        // );
+
+        print!("{}", Error::new_error_message(Error::new_error(1, messages::error(1)), Color::Yellow, ErrorType::Generic));
         return;
     }
 
@@ -57,14 +59,14 @@ fn main() {
 
         "read" => {
             if args[2].as_str() == "-l" {
-                println!("{}", errors::warn(1));
+                println!("{}", messages::warn(1));
 
                 let path = Path::new("config.sw").to_str().unwrap();
 
                 let filetype = verify_filetype(path);
 
                 if filetype == false {
-                    return println!("{}", errors::error(2));
+                    return println!("{}", messages::error(2));
                 }
 
                 let lines = verify_file_len(path.to_string());
@@ -79,7 +81,7 @@ fn main() {
             let disclamer = "Project is in beta development phase.".yellow();
 
             println!("{}", disclamer);
-            println!("{}", errors::help());
+            println!("{}", messages::help());
             return;
         }
 
@@ -114,7 +116,7 @@ fn main() {
             let disclamer = "Project is in beta development phase.".yellow();
 
             println!("{}", disclamer);
-            println!("{}", errors::help());
+            println!("{}", messages::help());
             return;
         }
     }
