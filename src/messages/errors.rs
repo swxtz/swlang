@@ -1,7 +1,7 @@
 
 use colored::Colorize;
 
-enum ErrorType {
+pub enum ErrorType {
     Generic,
     File,
     Compiler,
@@ -9,27 +9,38 @@ enum ErrorType {
     Syntax,
 }
 
-enum Color {
+pub enum Color {
     Red,
     Yellow,
     Green,
     Blue,
 }
 
-struct Error {
+pub struct ErrorBuilder {
     code: i32,
     message: String,
 }
 
-pub impl Error {
-    pub fn new_error(code: i32, message: String) -> Error {
-        Error { code, message }
+pub struct Error;
+
+impl Error {
+    pub fn new_error(code: i32, message: String, error_type: ErrorType, color: Color) -> String {
+        let error = Error::error_builder(code, message);
+
+        return Error::new_error_message(error, color, error_type);
     }
 
-    pub fn new_error_message(error: Error, color: Color, error_type: ErrorType) -> String {
-        let message = format!("{}: {} {}", convert_enum_to_string(error_type), error.message,  error.code);
+    pub fn new_error_message(error: ErrorBuilder, color: Color, error_type: ErrorType) -> String {
+        let message = format!("ERR! [{}]: {}, [Code]: {}", convert_enum_to_string(error_type), error.message,  error.code);
 
         return add_color(message, color);
+    }
+
+    fn error_builder(code: i32, message: String) -> ErrorBuilder {
+        ErrorBuilder {
+            code,
+            message,
+        }
     }
 }
 

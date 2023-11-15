@@ -1,125 +1,121 @@
 use colored::Colorize;
 use std::env;
-use std::path::Path;
 
 mod compiler;
 mod template;
+mod messages;
 
 use crate::compiler::compiler::{verify_file_len, verify_filetype};
 use crate::compiler::flags::{new_file, new_local};
+use crate::messages::errors::{Error, ErrorType, Color};
 use crate::template::downloader::{default_url, get_template};
 
-mod messages;
-
 fn main() {
-    // let arg
 
     let args: Vec<String> = env::args().collect();
-
     let disclamer = "Project is in beta development phase.".yellow();
 
     if args.len() == 1 {
-        // println!(
-        //     "
-        // {}
-        // {}
-        // {}
-        // ",
-        // messages::
-        //     disclamer,
-        //     messages::error(1),
-        //     messages::help()
-        // );
+        println!(
+            "
+        {}
+        {}
+        {}
+        ",
+            disclamer,
+            Error::new_error(1001, "You need to pass at least 1 argument".to_string(), ErrorType::Runtime, Color::Red),
+            messages::help::print_help_message()
+        );
 
-        print!("{}", Error::new_error_message(Error::new_error(1, messages::error(1)), Color::Yellow, ErrorType::Generic));
+        // print!("{}", Error::new_error(1, "teste".to_string(), ErrorType::Generic, Color::Red) );
         return;
     }
 
-    match args[1].as_str() {
-        "new" => {
-            if args[2].as_str() == "-l" {
-                new_local();
-                return;
-            }
+//     match args[1].as_str() {
+//         "new" => {
+//             if args[2].as_str() == "-l" {
+//                 new_local();
+//                 return;
+//             }
 
-            new_file();
+//             new_file();
 
-            // println!("");
-            // print!("choose where the file will be saved, by default and in root (.): ");
+//             // println!("");
+//             // print!("choose where the file will be saved, by default and in root (.): ");
 
-            // let mut path = String::new();
+//             // let mut path = String::new();
 
-            // io::stdin()
-            //     .read_line(&mut path)
-            //     .expect("Error reading file, try again!");
+//             // io::stdin()
+//             //     .read_line(&mut path)
+//             //     .expect("Error reading file, try again!");
 
-            // println!("");
-            // print!("File being created at: {}", path)
-        }
+//             // println!("");
+//             // print!("File being created at: {}", path)
+//         }
 
-        "read" => {
-            if args[2].as_str() == "-l" {
-                println!("{}", messages::warn(1));
+//         "read" => {
+//             if args[2].as_str() == "-l" {
+//                 println!("{}", messages::warn(1));
 
-                let path = Path::new("config.sw").to_str().unwrap();
+//                 let path = Path::new("config.sw").to_str().unwrap();
 
-                let filetype = verify_filetype(path);
+//                 let filetype = verify_filetype(path);
 
-                if filetype == false {
-                    return println!("{}", messages::error(2));
-                }
+//                 if filetype == false {
+//                     return println!("{}", messages::error(2));
+//                 }
 
-                let lines = verify_file_len(path.to_string());
+//                 let lines = verify_file_len(path.to_string());
 
-                for line in lines {
-                    println!("{}", line);
-                }
-            }
-        }
+//                 for line in lines {
+//                     println!("{}", line);
+//                 }
+//             }
+//         }
 
-        "help" => {
-            let disclamer = "Project is in beta development phase.".yellow();
+//         "help" => {
+//             let disclamer = "Project is in beta development phase.".yellow();
 
-            println!("{}", disclamer);
-            println!("{}", messages::help());
-            return;
-        }
+//             println!("{}", disclamer);
+//             println!("{}", messages::help());
+//             return;
+//         }
 
-        "template" => {
-            #[allow(unused_assignments)]
-            let mut url = String::new();
-            if args.len() <= 2 {
-                url = default_url();
+//         "template" => {
+//             #[allow(unused_assignments)]
+//             let mut url = String::new();
+//             if args.len() <= 2 {
+//                 url = default_url();
 
-                let content = get_template(url).expect("Could not download template");
+//                 let content = get_template(url).expect("Could not download template");
 
-                let path = Path::new("config.sw").to_str().unwrap();
+//                 let path = Path::new("config.sw").to_str().unwrap();
 
-                compiler::compiler::create_file(path.to_string(), content)
-                    .expect("Could not create file");
+//                 compiler::compiler::create_file(path.to_string(), content)
+//                     .expect("Could not create file");
 
-                return;
-            }
+//                 return;
+//             }
 
-            url = args[2].to_string();
+//             url = args[2].to_string();
 
-            let content = get_template(url).expect("Could not download template");
+//             let content = get_template(url).expect("Could not download template");
 
-            let path = Path::new("config.sw").to_str().unwrap();
+//             let path = Path::new("config.sw").to_str().unwrap();
 
-            compiler::compiler::create_file(path.to_string(), content)
-                .expect("Could not create file");
+//             compiler::compiler::create_file(path.to_string(), content)
+//                 .expect("Could not create file");
 
-            return;
-        }
-        _ => {
-            let disclamer = "Project is in beta development phase.".yellow();
+//             return;
+//         }
+//         _ => {
+//             let disclamer = "Project is in beta development phase.".yellow();
 
-            println!("{}", disclamer);
-            println!("{}", messages::help());
-            return;
-        }
-    }
+//             println!("{}", disclamer);
+//             println!("{}", messages::help());
+//             return;
+//         }
+//     }
 }
 
 mod tests {
