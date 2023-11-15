@@ -1,38 +1,33 @@
 use colored::Colorize;
 use std::env;
-use std::path::Path;
 
 mod compiler;
 mod template;
+mod messages;
 
 use crate::compiler::compiler::{verify_file_len, verify_filetype};
 use crate::compiler::flags::{new_file, new_local};
 use crate::messages::errors::{Error, ErrorType, Color};
 use crate::template::downloader::{default_url, get_template};
 
-mod messages;
-
 fn main() {
-    // let arg
 
     let args: Vec<String> = env::args().collect();
-
     let disclamer = "Project is in beta development phase.".yellow();
 
     if args.len() == 1 {
-        // println!(
-        //     "
-        // {}
-        // {}
-        // {}
-        // ",
-        // messages::
-        //     disclamer,
-        //     messages::error(1),
-        //     messages::help()
-        // );
+        println!(
+            "
+        {}
+        {}
+        {}
+        ",
+            disclamer,
+            Error::new_error(1001, "You need to pass at least 1 argument".to_string(), ErrorType::Runtime, Color::Red),
+            messages::help::print_help_message()
+        );
 
-        print!("{}", Error::new_error(1, "teste".to_string(), ErrorType::Generic, Color::Red) );
+        // print!("{}", Error::new_error(1, "teste".to_string(), ErrorType::Generic, Color::Red) );
         return;
     }
 

@@ -31,7 +31,7 @@ impl Error {
     }
 
     pub fn new_error_message(error: ErrorBuilder, color: Color, error_type: ErrorType) -> String {
-        let message = format!("{}: {} {}", convert_enum_to_string(error_type), error.message,  error.code);
+        let message = format!("ERR! [{}]: {}, [Code]: {}", convert_enum_to_string(error_type), error.message,  error.code);
 
         return add_color(message, color);
     }
